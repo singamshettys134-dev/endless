@@ -1,4 +1,5 @@
-import PageHeader from '../components/ui/PageHeader.jsx';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Clock3, Database, Layers3, ShieldCheck } from 'lucide-react';
 import Panel from '../components/lab/Panel.jsx';
 import { formatCompactCount, TOTAL_FALLBACK } from '../lib/constants.js';
 
@@ -32,8 +33,27 @@ const TRADEOFFS = [
 
 export default function Architecture() {
   return (
-    <div className="mx-auto max-w-5xl">
-      <PageHeader title="Architecture" subtitle="One request path, four mechanisms: cursor pagination, prefetching, a ranking pipeline, and a session cache." />
+    <div className="mx-auto max-w-6xl">
+      <section className="architecture-intro mb-8" aria-labelledby="architecture-title">
+        <div className="architecture-intro-copy">
+          <div className="showcase-kicker"><Layers3 className="h-3.5 w-3.5" /> System design / 01</div>
+          <h1 id="architecture-title">Infinite on the surface.<br /><span>Finite by design.</span></h1>
+          <p>One ranked session, many lightweight reads. Endless separates recommendation work from scroll work, then makes the trade-offs visible.</p>
+          <Link to="/lab" className="showcase-link showcase-link-primary">Inspect the live system <ArrowRight className="h-4 w-4" /></Link>
+        </div>
+        <div className="architecture-signature" aria-label="Architecture principles">
+          <div><span>01</span><strong>Build once</strong><small>Generate and rank on cache miss</small></div>
+          <div><span>02</span><strong>Read by cursor</strong><small>Serve the next slice by position</small></div>
+          <div><span>03</span><strong>Adapt on signal</strong><small>Refresh the unseen feed tail</small></div>
+        </div>
+      </section>
+
+      <div className="architecture-facts mb-8" aria-label="System defaults">
+        <div><Database className="h-4 w-4" /><span>Catalog</span><strong>{formatCompactCount(TOTAL_FALLBACK)}</strong></div>
+        <div><Clock3 className="h-4 w-4" /><span>Session cache</span><strong>15 min TTL</strong></div>
+        <div><Layers3 className="h-4 w-4" /><span>Local capacity</span><strong>10k entries</strong></div>
+        <div><ShieldCheck className="h-4 w-4" /><span>Shared cache</span><strong>Redis optional</strong></div>
+      </div>
 
       <div className="mb-8 grid gap-4 md:grid-cols-4">
         {[

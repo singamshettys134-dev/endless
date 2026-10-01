@@ -59,6 +59,149 @@ html { color-scheme: dark; }
   box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.2), 0 0 20px rgba(99, 102, 241, 0.12);
 }
 
+.showcase-intro,
+.architecture-intro {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.11);
+  background: linear-gradient(115deg, rgba(18, 23, 34, 0.98) 0%, rgba(16, 20, 29, 0.96) 52%, rgba(19, 27, 31, 0.93) 100%);
+  box-shadow: 0 28px 80px rgba(0,0,0,0.3), inset 0 1px rgba(255,255,255,0.07);
+}
+
+.showcase-intro {
+  grid-template-columns: minmax(0, 1.5fr) minmax(210px, 0.72fr);
+  min-height: 280px;
+  border-radius: 18px;
+}
+
+.architecture-intro {
+  grid-template-columns: minmax(0, 1.2fr) minmax(250px, 0.8fr);
+  min-height: 330px;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 12% 100%, rgba(34, 211, 238, 0.11), transparent 34%),
+    linear-gradient(112deg, rgba(18, 23, 34, 0.98), rgba(20, 24, 33, 0.97) 58%, rgba(28, 25, 31, 0.96));
+}
+
+.showcase-intro::after,
+.architecture-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(100deg, transparent, black 75%);
+}
+
+.showcase-copy,
+.architecture-intro-copy {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  padding: clamp(24px, 4vw, 48px);
+}
+
+.showcase-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #7dd3c7;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.showcase-kicker svg { color: #5eead4; }
+
+.showcase-copy h1,
+.architecture-intro h1 {
+  margin: 18px 0 0;
+  color: #f4f4f5;
+  font-size: clamp(30px, 4vw, 49px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.showcase-copy h1 span,
+.architecture-intro h1 span { color: #80ddd0; }
+.architecture-intro h1 span { color: #f5a87f; }
+
+.showcase-copy > p,
+.architecture-intro-copy > p {
+  max-width: 590px;
+  margin: 16px 0 0;
+  color: #a1a1aa;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.showcase-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 24px; }
+.showcase-link { display: inline-flex; align-items: center; gap: 8px; color: #c4c4cc; font-size: 13px; font-weight: 600; transition: color 160ms ease, transform 160ms ease; }
+.showcase-link:hover { color: #fff; transform: translateX(2px); }
+.showcase-link-primary { color: #8be2d6; }
+.showcase-link-primary:hover { color: #c1fff5; }
+
+.showcase-stats,
+.architecture-signature {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 22px 28px;
+  border-left: 1px solid rgba(255,255,255,0.09);
+  background: linear-gradient(90deg, rgba(255,255,255,0.015), rgba(255,255,255,0.045));
+}
+
+.showcase-stats > div,
+.architecture-signature > div { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 3px 12px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.showcase-stats > div:last-child,
+.architecture-signature > div:last-child { border-bottom: 0; }
+.showcase-stats span { color: #8b8b97; font-size: 11px; }
+.showcase-stats strong { color: #f4f4f5; font-size: 19px; font-weight: 700; }
+.showcase-stats small { grid-column: 1 / -1; color: #71717a; font-size: 10px; }
+.architecture-signature > div { grid-template-columns: 32px 1fr; align-items: center; }
+.architecture-signature > div > span { grid-row: span 2; color: #f5a87f; font-family: var(--font-mono); font-size: 11px; }
+.architecture-signature strong { color: #e4e4e7; font-size: 13px; }
+.architecture-signature small { color: #858590; font-size: 11px; }
+
+.architecture-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid rgba(255,255,255,0.09); border-radius: 12px; background: rgba(255,255,255,0.025); }
+.architecture-facts > div { display: grid; grid-template-columns: 20px 1fr; align-items: center; gap: 4px 10px; padding: 16px 18px; border-right: 1px solid rgba(255,255,255,0.08); }
+.architecture-facts > div:last-child { border-right: 0; }
+.architecture-facts svg { grid-row: span 2; color: #7dd3c7; }
+.architecture-facts span { color: #858590; font-size: 10px; }
+.architecture-facts strong { color: #e4e4e7; font-size: 13px; }
+
+html.light .showcase-intro,
+html.light .architecture-intro { border-color: rgba(24,24,27,0.12); background-color: #17191f; }
+html.light .architecture-facts { border-color: rgba(24,24,27,0.12); background: rgba(24,24,27,0.025); }
+html.light .architecture-facts > div { border-color: rgba(24,24,27,0.1); }
+html.light .architecture-facts strong { color: #27272a; }
+
+@media (max-width: 760px) {
+  .showcase-intro, .architecture-intro { grid-template-columns: 1fr; }
+  .showcase-stats, .architecture-signature { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(255,255,255,0.09); border-left: 0; padding: 8px 18px; }
+  .showcase-stats > div, .architecture-signature > div { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 12px 8px; border-right: 1px solid rgba(255,255,255,0.08); border-bottom: 0; }
+  .showcase-stats > div:last-child, .architecture-signature > div:last-child { border-right: 0; }
+  .architecture-signature > div > span { margin-bottom: 3px; }
+  .architecture-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .architecture-facts > div:nth-child(2) { border-right: 0; }
+  .architecture-facts > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.08); }
+}
+
+@media (max-width: 420px) {
+  .showcase-copy, .architecture-intro-copy { padding: 24px 20px; }
+  .showcase-copy h1, .architecture-intro h1 { font-size: 30px; }
+  .showcase-stats, .architecture-signature { padding-inline: 10px; }
+  .showcase-stats strong { font-size: 16px; }
+  .architecture-signature small { font-size: 10px; }
+}
+
 /* Light theme: re-point the tokens and invert the zinc scale so existing utilities flip automatically. */
 html.light {
   color-scheme: light;
