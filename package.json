@@ -1,0 +1,35 @@
+{
+  "name": "endless",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "node --watch server/index.js",
+    "dev:client": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "start": "node server/index.js",
+    "test": "node --test",
+    "loadtest": "node scripts/loadtest.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.0",
+    "cors": "^2.8.0",
+    "express": "^4.21.2",
+    "framer-motion": "^11.11.11",
+    "ioredis": "^5.4.2",
+    "lru-cache": "^11.0.0",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autocannon": "^8.0.0",
+    "concurrently": "^9.1.0",
+    "tailwindcss": "^4.1.11",
+    "vite": "^5.4.10"
+  }
+}
