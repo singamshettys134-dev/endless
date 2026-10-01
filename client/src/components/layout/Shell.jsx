@@ -11,11 +11,11 @@ export default function Shell() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return (
-    <div className="min-h-screen">
+    <div className="app-shell min-h-screen">
       <Topbar />
       <div className="flex">
         <Sidebar />
-        <main className="min-w-0 flex-1 px-4 pb-28 pt-6 lg:px-8 lg:pb-12">
+        <main className="main-surface min-w-0 flex-1 px-4 pb-28 pt-6 lg:px-8 lg:pb-12">
           {/* keyed by session: "New session" remounts every page with fresh state */}
           <Outlet key={sessionId} />
         </main>

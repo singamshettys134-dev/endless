@@ -20,7 +20,7 @@ export default function Topbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-fg/5 bg-ink/80 backdrop-blur-xl">
-      <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+      <div className="mx-auto flex h-16 max-w-[1600px] items-center gap-4 px-4 lg:px-6">
         <Link to="/" className="flex shrink-0 items-center gap-2.5" aria-label="Endless home">
           <Logo />
           <span className="hidden text-lg font-extrabold tracking-tight sm:block">Endless</span>
@@ -33,14 +33,14 @@ export default function Topbar() {
               onChange={(e) => setQ(e.target.value)}
               placeholder={`Search ${formatCount(TOTAL_FALLBACK)} videos`}
               aria-label="Search videos"
-              className="h-10 w-full rounded-full border border-fg/10 bg-fg/[0.04] pl-11 pr-4 text-sm text-fg placeholder:text-zinc-500 focus:border-indigo-400/60 focus:bg-fg/[0.06] focus:outline-none"
+              className="h-11 w-full rounded-full border border-fg/10 bg-fg/[0.04] pl-11 pr-4 text-sm text-fg placeholder:text-zinc-500 shadow-inner shadow-black/10 transition focus:border-indigo-400/60 focus:bg-fg/[0.06] focus:outline-none"
             />
           </div>
         </form>
         <button
           onClick={() => { newSession(); navigate('/'); }}
           title={`Session ${sessionId}. Click to start a new one`}
-          className="flex shrink-0 items-center gap-2 rounded-full border border-fg/10 px-3 py-2 text-xs font-medium text-zinc-300 transition hover:border-fg/20 hover:bg-fg/5"
+          className="flex shrink-0 items-center gap-2 rounded-full border border-fg/10 bg-fg/[0.03] px-3 py-2 text-xs font-medium text-zinc-300 transition hover:border-indigo-400/30 hover:bg-indigo-500/10 hover:text-indigo-100"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           <span className="hidden md:inline">New session</span>

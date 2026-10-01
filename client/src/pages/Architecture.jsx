@@ -35,6 +35,20 @@ export default function Architecture() {
     <div className="mx-auto max-w-5xl">
       <PageHeader title="Architecture" subtitle="One request path, four mechanisms: cursor pagination, prefetching, a ranking pipeline, and a session cache." />
 
+      <div className="mb-8 grid gap-4 md:grid-cols-4">
+        {[
+          ['Cursor-first', 'Stable position tracking without offset drift.'],
+          ['Prefetch-safe', 'The next batch is already buffered when the user nears the end.'],
+          ['Cache-aware', 'Session hits skip expensive recomputation and ranking.'],
+          ['Observable', 'Every stage is timed and clearly surfaced in the lab.'],
+        ].map(([title, body]) => (
+          <div key={title} className="soft-card rounded-2xl p-4">
+            <p className="text-sm font-semibold text-fg">{title}</p>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">{body}</p>
+          </div>
+        ))}
+      </div>
+
       <Panel title="System diagram">
         <div className="overflow-x-auto">
           <svg viewBox="0 0 900 330" className="mx-auto min-w-[760px]" role="img" aria-label="System architecture diagram">

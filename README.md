@@ -34,19 +34,66 @@ Endless addresses this with a practical demo that combines:
 ## Tech stack
 
 - Frontend: React + Vite + React Router
-- UI: custom layout and component system
-- Backend: Express.js
-- Caching: in-memory LRU session cache, optional Redis
-- Data: generated synthetic video catalog
+# Endless
 
-## Project structure
+Endless is a feed architecture lab and product prototype for the classic challenge in modern recommendation products: how do you make an endless experience feel lightweight, smooth, and intelligent without detonating latency or cache quality?
+
+The project models a YouTube-style recommendation system that behaves like a continuous infinite feed while using cursor-based pagination, prefetch buffering, session-scoped caching, and a ranked recommendation pipeline behind the scenes. It is designed to feel like a real product, while exposing the engineering trade-offs in a lab-friendly UI.
+
+## Product thesis
+
+Most platforms get trapped between two bad extremes:
+
+- full infinite loading with brute-force recomputation and poor latency
+- conservative pagination that feels slow, stale, and mechanical
+
+Endless sits between those two worlds. It keeps the feed feeling continuous for the user while reducing the backend to a narrow, efficient, measured execution path.
+
+## Why this project matters
+
+The core product problem is not just "how do we show more videos". The real challenge is:
+
+- preserve freshness without recomputing everything on every scroll
+- keep the experience smooth without exposing loading jank
+- avoid duplicate or drifted results as the session progresses
+- make the system explainable and observable during debugging
+
+Endless solves this with a practical system built around:
+
+- cursor pagination instead of fragile offset paging
+- session cache reuse for repeated recommendation work
+- background prefetching to hide latency
+- ranking + reranking for relevance and diversity
+- live instrumentation for timing, cache hits, failures, and signal impact
+
+## Feature set
+
+- Infinite scrolling experience designed to feel continuous rather than visibly paginated
+- Stable cursor-driven feed progression across a user session
+- Background prefetch buffer for the next slice of content
+- Session-scoped cache that avoids repeated ranking work
+- Recommendation pipeline with weighted relevance, freshness, popularity, and diversity controls
+- Live lab view that exposes cache hits, misses, failures, and timing behavior
+- Search, trending, category, and explore flow over a synthetic catalog
+- Optional Redis support for multi-instance shared session state
+- No database required for default use; the app runs with generated in-memory data
+
+## Stack
+
+- Frontend: React, Vite, React Router
+- UI layer: custom product-shell styling and responsive layout primitives
+- Backend: Express.js
+- Caching layer: in-memory session cache with optional Redis
+- Data model: generated synthetic video catalog for exploration and demo scenarios
+
+## Repository structure
 
 ```text
 .
-├── client/                 # React frontend
+├── client/                     # React frontend and product UI
 │   ├── src/
 │   └── index.html
-├── server/                 # Express server and business logic
+├── server/                     # Express API and recommendation logic
 │   ├── cache/
 │   ├── data/
 │   ├── recommender/
@@ -58,7 +105,8 @@ Endless addresses this with a practical demo that combines:
 ├── package.json
 ├── vite.config.js
 ├── README.md
-└── .gitignore
+├── .gitignore
+└── dist/                      # built frontend output for production
 ```
 
 ## Getting started
@@ -74,16 +122,16 @@ Endless addresses this with a practical demo that combines:
 npm install
 ```
 
-### Run the app in development mode
+### Start in development mode
 
 ```bash
 npm run dev
 ```
 
-This starts:
+This boots the API and the frontend together:
 
-- API server on http://localhost:4000
-- Vite frontend on http://localhost:5173 (or the next available port)
+- API: http://localhost:4000
+- Frontend: http://localhost:5173
 
 ### Production build
 
@@ -92,11 +140,9 @@ npm run build
 npm start
 ```
 
-In production, the Express server serves the built frontend from the dist folder.
+The Express server serves the built frontend from the dist directory.
 
-## Environment variables
-
-The app supports these environment variables:
+## Environment configuration
 
 ```bash
 PORT=4000
@@ -109,21 +155,21 @@ Notes:
 
 - `PORT` controls the API port.
 - `VIDEO_COUNT` changes the synthetic catalog size.
-- `REDIS_URL` is optional; if unset, the app uses in-memory fallback caching.
-- `CURSOR_SECRET` is used for signed cursor tokens.
+- `REDIS_URL` is optional; without it the app falls back to an in-memory cache.
+- `CURSOR_SECRET` protects signed cursor tokens and prevents tampering.
 
-## Main routes
+## Routes
 
 - `/` — personalized infinite feed
-- `/trending` — trending and ranked content views
-- `/explore` — feed exploration
-- `/category/:name` — category-specific feed
-- `/search?q=` — search-based feed
-- `/watch/:id` — video detail page
-- `/lab` — live proof of timing and cache behavior
-- `/architecture` — system design explanation
+- `/trending` — trending and ranked stream
+- `/explore` — discovery-oriented feed
+- `/category/:name` — category-specific browsing
+- `/search?q=` — search-based content flow
+- `/watch/:id` — video detail view
+- `/lab` — observable feed system behavior
+- `/architecture` — engineering architecture overview
 
-## API overview
+## API surface
 
 ```text
 GET /api/feed?session=&cursor=&limit=&cache=on|off&simulateSlow=0|1&simulateFail=0|1
@@ -136,30 +182,30 @@ GET /api/health
 POST /api/feed/signal
 ```
 
-## Architecture summary
+## System architecture
 
-The core idea is simple:
+The backbone of Endless is a straightforward but powerful flow:
 
-1. The client requests the next feed slice using a cursor.
-2. The server reuses or rebuilds a session-scoped recommendation list.
-3. A prefetch request fills the next page in the background.
-4. The cache avoids recomputing ranking when the session is still valid.
-5. The lab view exposes the trade-offs in real time.
+1. the client requests the next feed slice with a session-aware cursor
+2. the backend checks whether the session has a valid cached recommendation list
+3. on a miss, the recommender generates candidates, ranks them, and stores the result for reuse
+4. a background prefetch request keeps the next slice ready before the user reaches the end
+5. the lab surfaces the timing, cache behavior, and system trade-offs in real time
 
-This is designed to show how feed systems balance:
+This creates a feed system that balances:
 
 - latency
 - freshness
 - personalization
 - cache efficiency
-- smooth UX
+- product smoothness
 
-## Development notes
+## Design assumptions
 
-- The demo data is generated locally and is intentionally synthetic.
-- The project is meant for learning and exploration, not for production-grade data persistence.
-- Redis is optional and only needed when you want distributed or shared cache state.
+- The app intentionally uses generated synthetic video data rather than a production database.
+- This is designed for learning, exploration, and architecture demonstration.
+- Redis is optional and only needed when you want shared or multi-instance cache state.
 
 ## License
 
-This project is provided as a learning/demo project and is intended for local experimentation and technical exploration.
+This project is built as an engineering exploration and local product prototype. It is intended for technical learning, feed-system experimentation, and product architecture demonstrations.
